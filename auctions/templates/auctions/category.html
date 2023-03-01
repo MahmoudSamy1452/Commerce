@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Categories List</h2>
+		<form action="{% url 'category' %}" method="get">
+			{{form}}
+			<input type="submit" name="filtering">
+		</form>
+    {% for listing in listings %}
+        <a href="{% url 'view' listing.id %}">
+            <div class="mycontainer_row">
+                <div><img src="{{ listing.photo }}" width="240px" ></div>
+                <div class="mycontainer_col">
+                    <div class="title">{{ listing.title }}</div>
+                    <div class="Price">Price: ${{ listing.base_price }}</div>
+                    <div class="description">{{ listing.description }}</div>
+                    <div class="creation_date">{{ listing.creation_date }}</div>
+                </div>
+            </div>
+        </a>
+    {% empty %}
+        <div>No Listings yet</div>
+    {% endfor %}
+{% endblock %}

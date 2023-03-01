@@ -1,0 +1,108 @@
+body {
+    padding: 10px;
+    height: 100vh;
+}
+
+.mycontainer_row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+a>.mycontainer_row {
+    
+    border: 1px solid black;
+    color: black;
+    transition: background-color 0.4s;
+    margin: 10px 0;
+}
+
+.mycontainer_col, .container {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.mycontainer_row>div {
+    padding:20px;
+}
+
+.creation_date{
+    margin-top:auto;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+a>.mycontainer_row:hover {
+    background-color: navy;
+    color:aliceblue;
+}
+
+.photo>img {
+    display:block;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 500px;
+    max-width: 90vw;
+    border: 2px solid black;
+}
+
+.photo {
+    display: block;
+    width: 100%;
+}
+
+#view {
+    justify-content: space-around;
+}
+
+.tablecontainer {
+    height:160px;
+    overflow-y: scroll;
+    text-align: center;
+    margin-bottom: 10px;
+    width: 350px;
+}
+
+table {
+    width: 100%;
+}
+
+.Comments {
+    height: 75px;
+    width: 500px;
+    max-width: 90vw;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+}
+
+button[type="submit"]{
+    background-color: lightseagreen;
+}
+
+h2 {
+    display: inline;
+    margin-right: 10px;
+}
+
+.page-title{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+}
+
+.padding {
+    padding: 20px;
+}
+
+.red {
+    color: red;
+}
+
+.bold{
+    font-weight:bold;
+}

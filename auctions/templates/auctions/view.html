@@ -1,0 +1,77 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+<div class="page-title">
+	<h2>Listing: {{ listing.title }}</h2>
+	<form action="{% url 'view' listing.id %}" method="get">
+	{% if not status and not closed and user.is_authenticated %}
+		<button type="submit" name="add">Add to Watchlist</button>
+	{% elif not closed and user.is_authenticated %}
+		<button type="submit" name="remove">Remove from Watchlist</button>
+	{% endif %}
+	{% if request.user == listing.creator and not listing.closed %}
+		<button type="submit" name="close">Close Listing</button>
+	{% endif %}
+	</form>
+	{% if listing.closed %}
+		<div class="padding red"> (CLOSED) </div>
+		{% if request.user == winner.User %} 
+		<div class="padding bold"> You Won!! </div>
+		{% endif %}
+	{% endif %}
+</div>
+<div class="photo"><img src="{{ listing.photo }}"  ></div>
+<div class="mycontainer_row" id="view">
+	<div>
+		<div class="Price">Starting Price: ${{ listing.base_price }}</div>
+		<div class="description">Description: {{ listing.description }}</div>
+		<div class="creation_date">Listed by {{ listing.creator }} on {{ listing.creation_date }}</div>
+		<div align="center">Comments</div>
+		<div class="Comments">
+			{% for comment in comments %}
+				<div class="comment"><span style="color:red">{{ comment.User }}</span>: {{ comment.content }}</div>
+		  {% endfor %}
+		</div>
+		{% if user.is_authenticated %}
+		<form class="view" action="{% url 'view' listing.id %}" method="POST">
+			{% csrf_token %}
+			
+			<div align="center"><label>Comment</label> {{ CommentForm }} <button type="submit" name="submit-form2">Add Comment</button></div>
+		</form>
+		{% endif %}
+	</div>
+	<div>
+		<div class="tablecontainer"> 
+		<table>
+			<thead>
+				<tr>
+					<th>Bidder</th>
+					<th>Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for bid in bids %}
+				{% if bid.User == request.user %}
+				<tr style="background-color: lightgreen;">
+				{% else %}
+				<tr style="background-color: lightcoral;">
+				{% endif %}
+					<td>{{ bid.User }}</td>
+					<td>{{ bid.value }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% if not listing.closed and user.is_authenticated %}
+	<form class="view" action="{% url 'view' listing.id %}" method="POST">
+		{% csrf_token %}
+		<label>Bid</label>
+		{{ BidForm }}
+		<button type="submit" name="submit-form1">Place Bid</button>
+		<div align="center">{{ message }}</div>
+	</form>
+	{% endif %}
+	</div>
+</div>
+{% endblock %}

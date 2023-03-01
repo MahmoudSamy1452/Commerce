@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if not watch %}
+        <h2>Active Listings</h2>
+    {% else %}
+        <h2>Watchlist</h2>
+    {% endif %}
+    {% for listing in listings %}
+        <a href="{% url 'view' listing.id %}">
+            <div class="mycontainer_row">
+                <div><img src="{{ listing.photo }}" width="240px" ></div>
+                <div class="mycontainer_col">
+                    <div class="title">{{ listing.title }}</div>
+                    <div class="Price">Price: ${{ listing.base_price }}</div>
+                    {% for key, value in highest_bid.items %}
+                        {% if value and key == listing.id %}
+                            <div>Highest Bid: ${{ value }}</div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="description">{{ listing.description }}</div>
+                    <div class="creation_date">{{ listing.creation_date }}</div>
+                </div>
+            </div>
+        </a>
+    {% empty %}
+        <div>No Listings yet</div>
+    {% endfor %}
+{% endblock %}
